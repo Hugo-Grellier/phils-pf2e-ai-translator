@@ -269,6 +269,278 @@ export function getGlossaryContent() {
     return cleanContent.substring(0, 5000);
 }
 
+export function escapeRegExp(string) {
+    return string ? string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : "";
+}
+
+export function robustJsonParse(jsonStr) {
+    if (!jsonStr || typeof jsonStr !== 'string') return null;
+
+    let cleaned = jsonStr.trim();
+
+    try {
+        return JSON.parse(cleaned);
+    } catch (e1) { }
+
+    cleaned = cleaned.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, '$1');
+    cleaned = cleaned.replace(/,\s*([\}\]])/g, '$1');
+
+    try {
+        return JSON.parse(cleaned);
+    } catch (e2) { }
+
+    let inString = false;
+    let escaped = false;
+    let result = '';
+
+    for (let i = 0; i < cleaned.length; i++) {
+        const char = cleaned[i];
+        if (char === '"' && !escaped) {
+            inString = !inString;
+            result += char;
+        } else if (inString) {
+            if (char === '\n') result += '\\n';
+            else if (char === '\r') result += '\\r';
+            else if (char === '\t') result += '\\t';
+            else result += char;
+        } else {
+            result += char;
+        }
+        escaped = (char === '\\' && !escaped);
+    }
+
+    try {
+        return JSON.parse(result);
+    } catch (e3) {
+        return null;
+    }
+}
+
+export function smartParseAiResponse(rawText) {
+    if (!rawText || typeof rawText !== 'string') {
+        return { error: "Kein Text zum Parsen übergeben." };
+    }
+
+    let translationJson = null;
+    let newGlossaryItems = [];
+    let glossaryJournalJson = null;
+
+    const fenceRegex = /```(?:json)?\s*([\s\S]*?)\s*```/gi;
+    const matches = [...rawText.matchAll(fenceRegex)];
+
+    const blocksToTry = matches.length > 0 ? matches.map(m => m[1]) : [rawText];
+
+    for (let block of blocksToTry) {
+        block = block.trim();
+        const firstBrace = block.indexOf('{');
+        const firstBracket = block.indexOf('[');
+        const start = (firstBrace !== -1 && (firstBracket === -1 || firstBrace < firstBracket)) ? firstBrace : firstBracket;
+        if (start === -1) continue;
+
+        const lastBrace = block.lastIndexOf('}');
+        const lastBracket = block.lastIndexOf(']');
+        const end = Math.max(lastBrace, lastBracket);
+        if (end <= start) continue;
+
+        const jsonCandidate = block.substring(start, end + 1);
+        const parsed = robustJsonParse(jsonCandidate);
+
+        if (parsed) {
+            if (Array.isArray(parsed)) {
+                if (parsed.length > 0 && parsed[0].original) {
+                    newGlossaryItems.push(...parsed);
+                }
+            } else if (typeof parsed === 'object' && parsed !== null) {
+                if (parsed.name === "AI Glossary Update" && Array.isArray(parsed.newTerms)) {
+                    newGlossaryItems.push(...parsed.newTerms);
+                } else if (parsed.name === "AI Glossary" || parsed.name === "AI Glossar") {
+                    glossaryJournalJson = parsed;
+                } else if (parsed.pages || parsed.items || parsed.system || parsed.name) {
+                    translationJson = parsed;
+                }
+            }
+        }
+    }
+
+    if (!translationJson && !glossaryJournalJson && newGlossaryItems.length === 0) {
+        return { error: "Kein gültiger Übersetzungs- oder Glossar-JSON-Block in der Antwort gefunden. Prüfe die KI-Antwort." };
+    }
+
+    return {
+        success: true,
+        translationJson,
+        glossaryJournalJson,
+        newGlossaryItems
+    };
+}
+
+export function extractOriginalSentenceContext(originalHtml, aiHtml, targetId, originalTerm, currentTerm) {
+    const findSentence = (htmlText, searchStr) => {
+        if (!htmlText || !searchStr) return "";
+        const cleanText = htmlText.replace(/<[^>]*>?/gm, " ");
+        const idx = cleanText.indexOf(searchStr);
+        if (idx === -1) return cleanText.substring(0, 150) + "...";
+
+        let start = idx;
+        while (start > 0 && !/[.!?\n]/.test(cleanText[start - 1])) start--;
+        let end = idx + searchStr.length;
+        while (end < cleanText.length && !/[.!?\n]/.test(cleanText[end])) end++;
+        return cleanText.substring(start, end + 1).trim();
+    };
+
+    const origMarker = `[[${targetId}:${originalTerm}]]`;
+    let rawOrigSentence = findSentence(originalHtml, origMarker);
+    if (!rawOrigSentence || rawOrigSentence.length < 5) {
+        rawOrigSentence = findSentence(originalHtml, originalTerm);
+    }
+    const origHtmlFormatted = rawOrigSentence
+        .replace(/\[\[#.*?:(.*?)\]\]/g, "$1")
+        .replace(new RegExp(escapeRegExp(originalTerm), "g"), `<span class="ts-term-highlight-orig">${originalTerm}</span>`);
+
+    const aiMarker = `[[${targetId}:${currentTerm}]]`;
+    let rawAiSentence = findSentence(aiHtml, aiMarker);
+    if (!rawAiSentence || rawAiSentence.length < 5) {
+        rawAiSentence = findSentence(aiHtml, currentTerm);
+    }
+    const aiHtmlFormatted = rawAiSentence
+        .replace(/\[\[#.*?:(.*?)\]\]/g, "$1")
+        .replace(new RegExp(escapeRegExp(currentTerm), "g"), `<span class="ts-term-highlight-ai">${currentTerm}</span>`);
+
+    return {
+        originalSentenceHtml: origHtmlFormatted || "(Originalsatz konnte nicht ermittelt werden)",
+        aiSentenceHtml: aiHtmlFormatted || "(KI-Satz konnte nicht ermittelt werden)"
+    };
+}
+
+export function validateAndRepairLinks(originalText, translatedText) {
+    if (!originalText || !translatedText) return { valid: true, repairedText: translatedText, errors: [] };
+
+    const linkRegex = /@([a-zA-Z]+)\[([^\]]+)\](?:\{([^\}]*)\})?/g;
+    const origLinks = [...originalText.matchAll(linkRegex)];
+    const transLinks = [...translatedText.matchAll(linkRegex)];
+
+    let repairedText = translatedText;
+    let errors = [];
+
+    origLinks.forEach((orig) => {
+        const origType = orig[1];
+        const origId = orig[2];
+        const origLabel = orig[3];
+
+        const match = transLinks.find(t => t[1] === origType && t[2] === origId);
+        if (!match) {
+            const brokenRegex = new RegExp(`@${origType}\\[[^\\]]+\\]`, 'g');
+            if (brokenRegex.test(repairedText)) {
+                repairedText = repairedText.replace(brokenRegex, `@${origType}[${origId}]`);
+            } else {
+                errors.push(`Missing link: @${origType}[${origId}] (${origLabel || origId})`);
+            }
+        }
+    });
+
+    return {
+        valid: errors.length === 0,
+        repairedText: repairedText,
+        errors: errors
+    };
+}
+
+export async function buildPreApplyDiff(doc, parseResult, processingMode = 'translate', selectedPageIds = null) {
+    const translationJson = parseResult.translationJson;
+    const newGlossaryItems = parseResult.newGlossaryItems || [];
+    const conflicts = [];
+    let linksOk = true;
+
+    if (translationJson) {
+        if (translationJson._id && translationJson._id !== doc.id) {
+            translationJson._id = doc.id;
+        }
+
+        if (doc.documentName === "JournalEntry" && translationJson.pages && Array.isArray(translationJson.pages)) {
+            const origPages = (selectedPageIds && selectedPageIds.length > 0)
+                ? selectedPageIds.map(id => doc.pages.get(id)).filter(Boolean)
+                : Array.from(doc.pages);
+
+            translationJson.pages.forEach((p, idx) => {
+                const origPage = (p._id ? doc.pages.get(p._id) : null) || origPages[idx];
+                if (origPage) {
+                    p._id = origPage._id;
+                }
+            });
+        }
+    }
+
+    if (translationJson && processingMode === 'grammar') {
+        const { processedData: referenceData, glossaryMap } = await injectGlossaryMarkers(getCleanData(doc, true, selectedPageIds));
+
+        const scan = (obj) => {
+            if (typeof obj === 'string') {
+                const matches = [...obj.matchAll(/\[\[\s*#?(\d+)\s*:\s*(.*?)\s*\]\]/g)];
+                for (const match of matches) {
+                    const id = `#${match[1]}`;
+                    const returnedTerm = match[2];
+                    const entry = glossaryMap.get(id);
+
+                    if (entry && entry.term && returnedTerm !== entry.term) {
+                        let locationName = doc.name;
+                        if (doc.pages && entry.scopeId) {
+                            const page = doc.pages.get(entry.scopeId);
+                            if (page) locationName = page.name;
+                        }
+
+                        let origHtml = "";
+                        let aiHtml = obj;
+                        if (doc.pages && entry.scopeId) {
+                            const page = doc.pages.get(entry.scopeId);
+                            if (page && page.text?.content) origHtml = page.text.content;
+                        }
+
+                        const sentenceContext = extractOriginalSentenceContext(origHtml, aiHtml, id, entry.term, returnedTerm);
+
+                        conflicts.push({
+                            id: id,
+                            originalTerm: entry.term,
+                            currentTerm: returnedTerm,
+                            locationName: locationName,
+                            originalSentenceHtml: sentenceContext.originalSentenceHtml,
+                            aiSentenceHtml: sentenceContext.aiSentenceHtml
+                        });
+                    }
+                }
+            } else if (Array.isArray(obj)) {
+                obj.forEach(scan);
+            } else if (typeof obj === 'object' && obj !== null) {
+                for (const k in obj) scan(obj[k]);
+            }
+        };
+        scan(translationJson);
+    }
+
+    if (doc.documentName === "JournalEntry" && translationJson?.pages) {
+        translationJson.pages.forEach(newPage => {
+            const origPage = doc.pages.get(newPage._id);
+            if (origPage && newPage.text?.content) {
+                const linkRes = validateAndRepairLinks(origPage.text.content, newPage.text.content);
+                newPage.text.content = linkRes.repairedText;
+                if (!linkRes.valid) linksOk = false;
+            }
+        });
+    }
+
+    const pagesCount = translationJson?.pages?.length || (doc.pages ? doc.pages.size : 1);
+
+    return {
+        pagesCount,
+        linksOk,
+        newGlossaryCount: newGlossaryItems.length,
+        hasConflicts: conflicts.length > 0,
+        conflicts,
+        translationJson,
+        newGlossaryItems,
+        glossaryJournalJson: parseResult.glossaryJournalJson
+    };
+}
+
 export async function processUpdate(doc, rawText, processingMode = 'translate', selectedPageIds = null) {
     const jsonMatches = [...rawText.matchAll(/```json\s*([\s\S]*?)\s*```/gi)];
     let translationJson = null;
@@ -646,6 +918,25 @@ export async function processUpdate(doc, rawText, processingMode = 'translate', 
 
 export async function applyResolvedUpdate(doc, jsonData, resolutions = {}, processingMode = 'translate', selectedPageIds = null) {
     try {
+        // Auto-Repair Root ID and Page IDs if AI hallucinated IDs
+        if (jsonData._id && jsonData._id !== doc.id) {
+            console.log(`Phils Translator | Repairing root ID mismatch: AI gave '${jsonData._id}', setting to '${doc.id}'.`);
+            jsonData._id = doc.id;
+        }
+
+        if (doc.documentName === "JournalEntry" && jsonData.pages && Array.isArray(jsonData.pages)) {
+            const origPages = (selectedPageIds && selectedPageIds.length > 0)
+                ? selectedPageIds.map(id => doc.pages.get(id)).filter(Boolean)
+                : Array.from(doc.pages);
+
+            jsonData.pages.forEach((p, idx) => {
+                const origPage = (p._id ? doc.pages.get(p._id) : null) || origPages[idx];
+                if (origPage) {
+                    p._id = origPage._id;
+                }
+            });
+        }
+
         // 0. Apply Resolutions (Restorations)
         if (resolutions && Object.keys(resolutions).length > 0) {
             const applyRes = (obj) => {
@@ -736,25 +1027,54 @@ export async function applyResolvedUpdate(doc, jsonData, resolutions = {}, proce
         }
 
         if (doc.documentName === "JournalEntry" && jsonData.pages && Array.isArray(jsonData.pages)) {
-            jsonData.pages = jsonData.pages.map(newPage => {
-                if (newPage._id) {
-                    newPage.flags = newPage.flags || {};
+            const pageUpdates = [];
 
-                    if (processingMode === 'grammar') {
-                        newPage.flags[MODULE_ID] = {
-                            aiGrammarChecked: true,
-                            aiProcessed: doc.pages.get(newPage._id)?.getFlag(MODULE_ID, 'aiProcessed') || false
-                        };
-                    } else {
-                        // Translate mode (default)
-                        newPage.flags[MODULE_ID] = {
-                            aiProcessed: true,
-                            aiGrammarChecked: false
-                        };
-                    }
+            jsonData.pages.forEach(newPage => {
+                if (!newPage._id) return;
+
+                // Normalize text content structure for Foundry JournalEntryPage
+                let contentText = null;
+                if (typeof newPage.text === 'object' && newPage.text !== null && newPage.text.content !== undefined) {
+                    contentText = newPage.text.content;
+                } else if (typeof newPage.text === 'string') {
+                    contentText = newPage.text;
+                } else if (typeof newPage.content === 'string') {
+                    contentText = newPage.content;
+                } else if (typeof newPage.value === 'string') {
+                    contentText = newPage.value;
                 }
-                return newPage;
+
+                if (contentText !== null) {
+                    newPage.text = {
+                        content: contentText,
+                        format: 1
+                    };
+                }
+
+                newPage.flags = newPage.flags || {};
+                if (processingMode === 'grammar') {
+                    newPage.flags[MODULE_ID] = {
+                        aiGrammarChecked: true,
+                        aiProcessed: doc.pages.get(newPage._id)?.getFlag(MODULE_ID, 'aiProcessed') || false
+                    };
+                } else {
+                    newPage.flags[MODULE_ID] = {
+                        aiProcessed: true,
+                        aiGrammarChecked: false
+                    };
+                }
+
+                pageUpdates.push(newPage);
             });
+
+            if (pageUpdates.length > 0) {
+                try {
+                    await doc.updateEmbeddedDocuments("JournalEntryPage", pageUpdates);
+                    console.log(`Phils Translator | Successfully updated ${pageUpdates.length} journal pages via updateEmbeddedDocuments.`);
+                } catch (pageErr) {
+                    console.warn("Phils Translator | updateEmbeddedDocuments fallback:", pageErr);
+                }
+            }
         }
 
         if (jsonData.type && jsonData.type !== doc.type) ui.notifications.warn(loc('WarnTypeChange') || `Achtung: Type-Change!`);

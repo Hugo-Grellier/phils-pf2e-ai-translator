@@ -1,0 +1,292 @@
+/* Phils PF2e AI Translator - Translation Studio Styles */
+
+.translation-studio-window {
+    min-width: 620px;
+    min-height: 650px;
+}
+
+.ts-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: #e0e0e0;
+    font-family: var(--font-primary, "Signika", sans-serif);
+    gap: 12px;
+}
+
+/* Header Stepper Bar */
+.ts-stepper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(20, 24, 30, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px 16px;
+    backdrop-filter: blur(8px);
+}
+
+.ts-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.ts-step.active {
+    opacity: 1.0;
+    color: #4facfe;
+    font-weight: bold;
+}
+
+.ts-step.completed {
+    opacity: 0.9;
+    color: #00f2fe;
+}
+
+.ts-step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.ts-step.active .ts-step-num {
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    color: #111;
+}
+
+.ts-step-divider {
+    flex: 1;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 10px;
+}
+
+/* Card Content Area */
+.ts-card {
+    background: rgba(25, 30, 38, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.ts-section-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 6px;
+}
+
+/* Page Checklist Grid */
+.ts-page-list {
+    max-height: 220px;
+    overflow-y: auto;
+    background: rgba(15, 18, 22, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 8px;
+    margin-bottom: 12px;
+}
+
+.ts-page-item {
+    display: flex;
+    align-items: center;
+    padding: 6px 8px;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+.ts-page-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.ts-badge {
+    font-size: 0.75em;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-weight: 600;
+}
+
+.ts-badge-success {
+    background: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.4);
+}
+
+.ts-badge-info {
+    background: rgba(52, 152, 219, 0.2);
+    color: #3498db;
+    border: 1px solid rgba(52, 152, 219, 0.4);
+}
+
+.ts-badge-warning {
+    background: rgba(241, 196, 15, 0.2);
+    color: #f1c40f;
+    border: 1px solid rgba(241, 196, 15, 0.4);
+}
+
+.ts-badge-danger {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    border: 1px solid rgba(231, 76, 60, 0.4);
+}
+
+/* Sentence Diff & Problem Inspection Card */
+.ts-conflict-card {
+    background: rgba(18, 22, 28, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-left: 4px solid #f39c12;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.ts-conflict-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.ts-location-tag {
+    font-size: 0.85em;
+    color: #00f2fe;
+    background: rgba(0, 242, 254, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 242, 254, 0.3);
+}
+
+.ts-sentence-box {
+    background: rgba(10, 12, 16, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+.ts-sentence-box.original {
+    border-left: 3px solid #3498db;
+}
+
+.ts-sentence-box.ai {
+    border-left: 3px solid #e74c3c;
+}
+
+.ts-sentence-box.restored {
+    border-left: 3px solid #2ecc71;
+}
+
+.ts-term-highlight-orig {
+    background: rgba(52, 152, 219, 0.3);
+    color: #5dade2;
+    padding: 0 4px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.ts-term-highlight-ai {
+    background: rgba(231, 76, 60, 0.3);
+    color: #ec7063;
+    padding: 0 4px;
+    border-radius: 3px;
+    font-weight: bold;
+    text-decoration: line-through;
+}
+
+.ts-term-highlight-good {
+    background: rgba(46, 204, 113, 0.3);
+    color: #58d68d;
+    padding: 0 4px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+/* Action Controls Bar */
+.ts-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+.ts-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.ts-btn:hover {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 100%);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.ts-btn-primary {
+    background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+    border: none;
+}
+
+.ts-btn-primary:hover {
+    background: linear-gradient(135deg, #00d2ff 0%, #0082ff 100%);
+    box-shadow: 0 0 12px rgba(0, 198, 255, 0.4);
+}
+
+.ts-btn-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    border: none;
+    color: #052613;
+}
+
+.ts-btn-success:hover {
+    background: linear-gradient(135deg, #13ab9f 0%, #46ff8c 100%);
+    box-shadow: 0 0 12px rgba(56, 239, 125, 0.4);
+}
+
+/* Paste Textarea */
+.ts-paste-box {
+    width: 100%;
+    min-height: 220px;
+    background: rgba(10, 12, 16, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    color: #00f2fe;
+    font-family: monospace;
+    padding: 10px;
+    resize: vertical;
+}
+
+.ts-paste-box:focus {
+    outline: none;
+    border-color: #00f2fe;
+    box-shadow: 0 0 8px rgba(0, 242, 254, 0.3);
+}

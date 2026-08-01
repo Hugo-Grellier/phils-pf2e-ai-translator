@@ -12,22 +12,19 @@ Lehn dich zurück. Hier ist der Deep Dive unter die Haube – erklärt für Leut
 
 Machen wir uns nichts vor: Dieses Modul ist eigentlich nur ein glorifizierter Vermittler. Ein digitaler Zuhälter für Texte, wenn du so willst. Da wir (noch) keine direkte Standleitung in das Gehirn von ChatGPT oder Claude haben (weil das Geld kostet und API-Keys nerven), bist du die **biologische Schnittstelle**.
 
-Der Workflow ist ein okkultes Ritual in 6 Schritten:
+Der Workflow ist ein okkultes Ritual im neuen 1-Fenster Translation Studio:
 
-1.  **Das Opfer wählen:** Öffne den "AI Translator". Zieh dein Journal per Drag & Drop rein, als würdest du einen nervigen Goblin in eine Fallgrube schubsen.
+1.  **Das Opfer wählen:** Klicke oben im Journal-Tab auf den rötlichen Button **`PF2e Übersetzer`**. Zieh dein Journal per Drag & Drop rein, als würdest du einen nervigen Goblin in eine Fallgrube schubsen.
 2.  **Die Waffe wählen:** 
     * *"Übersetzen":* Wenn du Text hast, der noch englischer ist als Fish & Chips.
     * *"Grammatik-Check":* Wenn der Text schon deutsch ist, aber aussieht, als hätte ihn ein besoffener Ork mit Fäustlingen getippt.
-3.  **Die Beschwörungsformel:** Klick auf **"Übersetzung starten"**. Das Modul generiert jetzt einen Prompt, der so präzise formuliert ist, dass selbst ein Dschinn ihn nicht missverstehen könnte. Er landet in deiner Zwischenablage.
-4.  **Der Gang nach Canossa:** Du gehst zu ChatGPT, Claude, DeepSeek oder deiner Oma (falls sie gut JSON spricht)... `Strg+V` (Einfügen). Enter.
-5.  **Das Ernten:** Die KI kotzt (hoffentlich) perfekten, formatierten Text aus (JSON). Du kopierst diesen Kauderwelsch.
-6.  **Die Erlösung:** Zurück zu Foundry. Einfügen. Klick auf **"Update"**.
-    * *Ergebnis:* BÄM! Dein Journal glänzt wie eine polierte Plattenrüstung.
-7.  **Das "Nervensägen"-Feature (Auto-Next):**
-    * Kaum hast du "Update" geklickt, schreit dich das Modul an: *"Hey, du bist noch nicht fertig! Da sind noch 50 Seiten!"*
-    * Es öffnet automatisch das nächste Fenster.
-    * Und das Beste: Es merkt sich, was du tust. Wenn du gerade **Grammatik** prüfst, öffnet es die nächste ungeprüfte Seite im **Grammatik-Modus**.
-    * Es ist wie ein Quest-Marker, den man nicht abschalten kann. Aber hey, so wirst du wenigstens fertig.
+    * *"Nur Glossar":* Wenn du erst Vokabeln sammeln willst.
+3.  **Die Beschwörungsformel:** Klick auf **"Weiter zu Prompt & KI"** ➔ **"Prompt kopieren & KI öffnen"**. Das Modul kopiert einen perfekt präparierten Prompt in deine Zwischenablage und öffnet deine KI.
+4.  **Der Gang nach Canossa:** Bei Gemini, ChatGPT oder Claude `Strg+V` (Einfügen). Enter.
+5.  **Das Ernten & Einmalige Einfügen (Single-Paste):** Die KI antwortet. Du kopierst die gesamte Antwort, kehrst nach Foundry zurück und fügst sie im Schritt 3 **Einfügen** per `Strg+V` ein. Das Modul trennt Übersetzung und Glossar automatisch in einem Rutsch.
+6.  **Die Erlösung & Satzgegenüberstellung:** In Schritt 4 siehst du eine transparente Vorschau mit Satzgegenüberstellung (Originalsatz vs. KI-Satz). Ein Klick auf **"Journal aktualisieren & Übernehmen"** – BÄM! Dein Journal glänzt wie eine polierte Plattenrüstung.
+7.  **Der automatische Weitermarsch (Auto-Batch):**
+    * Kaum hast du auf Übernehmen geklickt, schaltet das Studio automatisch auf den nächsten Batch der verbleibenden Seiten um. Du musst nicht mal neu klicken!
 
 ---
 

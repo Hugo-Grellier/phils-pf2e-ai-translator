@@ -1,0 +1,247 @@
+<div class="ts-container">
+    <!-- Stepper Navigation -->
+    <div class="ts-stepper">
+        <div class="ts-step {{#if (eq step 1)}}active{{/if}} {{#if (gt step 1)}}completed{{/if}}">
+            <div class="ts-step-num">{{#if (gt step 1)}}<i class="fas fa-check"></i>{{else}}1{{/if}}</div>
+            <span>Setup & Seiten</span>
+        </div>
+        <div class="ts-step-divider"></div>
+        <div class="ts-step {{#if (eq step 2)}}active{{/if}} {{#if (gt step 2)}}completed{{/if}}">
+            <div class="ts-step-num">{{#if (gt step 2)}}<i class="fas fa-check"></i>{{else}}2{{/if}}</div>
+            <span>Prompt & KI</span>
+        </div>
+        <div class="ts-step-divider"></div>
+        <div class="ts-step {{#if (eq step 3)}}active{{/if}} {{#if (gt step 3)}}completed{{/if}}">
+            <div class="ts-step-num">{{#if (gt step 3)}}<i class="fas fa-check"></i>{{else}}3{{/if}}</div>
+            <span>Einfügen</span>
+        </div>
+        <div class="ts-step-divider"></div>
+        <div class="ts-step {{#if (eq step 4)}}active{{/if}}">
+            <div class="ts-step-num">4</div>
+            <span>Vorschau & Prüfung</span>
+        </div>
+    </div>
+
+    <!-- Step 1: Document & Page Setup -->
+    {{#if (eq step 1)}}
+    <div class="ts-card">
+        <div class="ts-section-title">
+            <i class="fas fa-book-open"></i> 
+            {{#if hasDoc}}Journal: {{docName}}{{else}}Journal auswählen{{/if}}
+        </div>
+
+        {{#unless hasDoc}}
+        <div id="ts-dropzone" style="border: 2px dashed rgba(255,255,255,0.2); border-radius: 8px; padding: 40px; text-align: center; margin-bottom: 12px; background: rgba(0,0,0,0.2); cursor: pointer;">
+            <i class="fas fa-file-import" style="font-size: 3em; color: #4facfe; margin-bottom: 10px;"></i>
+            <p style="font-size: 1.1em; font-weight: bold; margin: 0;">Ziehe ein Journal oder eine Seite hierhin</p>
+            <p style="font-size: 0.85em; opacity: 0.7;">oder wähle ein geöffnetes Journal aus</p>
+        </div>
+        {{else}}
+        
+        <!-- Mode Selection -->
+        <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+            <label style="flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                <input type="radio" name="mode" value="translate" {{#if (eq mode 'translate')}}checked{{/if}}>
+                <div>
+                    <div style="font-weight: bold;"><i class="fas fa-language" style="color: #4facfe;"></i> Übersetzung</div>
+                    <div style="font-size: 0.75em; opacity: 0.7;">Englisch zu Deutsch</div>
+                </div>
+            </label>
+            <label style="flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                <input type="radio" name="mode" value="grammar" {{#if (eq mode 'grammar')}}checked{{/if}}>
+                <div>
+                    <div style="font-weight: bold;"><i class="fas fa-spell-check" style="color: #3498db;"></i> Grammatik-Check</div>
+                    <div style="font-size: 0.75em; opacity: 0.7;">Schutz geschützter Begriffe</div>
+                </div>
+            </label>
+            <label style="flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                <input type="radio" name="mode" value="glossary" {{#if (eq mode 'glossary')}}checked{{/if}}>
+                <div>
+                    <div style="font-weight: bold;"><i class="fas fa-book-atlas" style="color: #f1c40f;"></i> Nur Glossar</div>
+                    <div style="font-size: 0.75em; opacity: 0.7;">Eigennamen extrahieren</div>
+                </div>
+            </label>
+        </div>
+
+        <!-- Page List -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label style="font-weight: bold;">Seiten auswählen (Batch):</label>
+            <div style="display: flex; gap: 6px;">
+                <button type="button" class="ts-btn" data-action="toggleSelect" style="padding: 4px 8px; font-size: 0.8em; height: 26px;">
+                    <i class="fas fa-check-double"></i> Alle / Keine
+                </button>
+                <button type="button" class="ts-btn" data-action="selectNext" style="padding: 4px 8px; font-size: 0.8em; height: 26px;">
+                    <i class="fas fa-forward"></i> Nächster Batch
+                </button>
+            </div>
+        </div>
+
+        <div class="ts-page-list">
+            {{#each pages}}
+            <div class="ts-page-item">
+                <input type="checkbox" class="ts-page-checkbox" value="{{this.id}}" {{#if this.checked}}checked{{/if}} style="margin-right: 8px;">
+                <span style="flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{this.name}}</span>
+                {{#if this.isProcessed}}<span class="ts-badge ts-badge-success"><i class="fas fa-check"></i> Übersetzt</span>{{/if}}
+                {{#if this.isGrammarChecked}}<span class="ts-badge ts-badge-info"><i class="fas fa-spell-check"></i> Geprüft</span>{{/if}}
+            </div>
+            {{/each}}
+        </div>
+
+        <!-- Custom Prompt Instructions -->
+        <div style="margin-top: 6px;">
+            <label style="font-size: 0.9em; font-weight: bold; margin-bottom: 4px; display: block;">Zusätzliche Anweisungen (optional):</label>
+            <textarea id="ts-custom-instruct" placeholder="z. B. 'Übersetze förmlich im PF2e Regelstil', 'Verwende Du statt Sie'..." style="width: 100%; height: 50px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: #fff; padding: 6px; font-size: 0.9em;">{{customInstruct}}</textarea>
+        </div>
+        {{/unless}}
+
+        <div class="ts-actions">
+            {{#if hasDoc}}
+            <button type="button" class="ts-btn ts-btn-primary" data-action="generatePrompt">
+                Weiter zu Prompt & KI <i class="fas fa-arrow-right"></i>
+            </button>
+            {{/if}}
+        </div>
+    </div>
+    {{/if}}
+
+    <!-- Step 2: Prompt Copy & AI Launch -->
+    {{#if (eq step 2)}}
+    <div class="ts-card">
+        <div class="ts-section-title">
+            <i class="fas fa-robot"></i> Prompt generiert & bereit
+        </div>
+        <p style="font-size: 0.9em; opacity: 0.8; margin-bottom: 8px;">
+            Der Prompt wurde zusammengestellt. Klicke auf <b>Prompt kopieren</b> und füge ihn in deinen KI-Chat ein.
+        </p>
+
+        <textarea readonly style="width: 100%; height: 240px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #a9c6de; font-family: monospace; font-size: 0.85em; padding: 8px; resize: none; margin-bottom: 12px;">{{generatedPrompt}}</textarea>
+
+        <div class="ts-actions">
+            <button type="button" class="ts-btn" data-action="backToStep1">
+                <i class="fas fa-arrow-left"></i> Zurück
+            </button>
+            <button type="button" class="ts-btn ts-btn-primary" data-action="copyPromptAndOpenAi">
+                <i class="fas fa-copy"></i> Prompt kopieren & KI öffnen
+            </button>
+            <button type="button" class="ts-btn" data-action="goToStep3" style="background: rgba(255,255,255,0.08);">
+                Weiter zum Einfügen <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+    {{/if}}
+
+    <!-- Step 3: Response Paste & Smart Inspection -->
+    {{#if (eq step 3)}}
+    <div class="ts-card">
+        <div class="ts-section-title">
+            <i class="fas fa-paste"></i> KI-Antwort einfügen (Single-Paste)
+        </div>
+        <p style="font-size: 0.9em; opacity: 0.8; margin-bottom: 8px;">
+            Füge die komplette Antwort der KI in das Feld ein (STRG+V). Das Modul parst Übersetzung & Glossar-Updates automatisch in einem Schritt.
+        </p>
+
+        {{#if parseError}}
+        <div class="ts-badge ts-badge-danger" style="display: block; padding: 8px 12px; font-size: 0.9em; margin-bottom: 8px; border-radius: 6px;">
+            <i class="fas fa-exclamation-triangle"></i> {{parseError}}
+        </div>
+        {{/if}}
+
+        <textarea id="ts-paste-textarea" class="ts-paste-box" placeholder="Füge hier die Antwort der KI ein (STRG+V)...">{{pastedText}}</textarea>
+
+        <div class="ts-actions">
+            <button type="button" class="ts-btn" data-action="backToStep2">
+                <i class="fas fa-arrow-left"></i> Zurück
+            </button>
+            <button type="button" class="ts-btn ts-btn-primary" data-action="analyzePaste">
+                <i class="fas fa-microscope"></i> Analysieren & Prüfen <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+    {{/if}}
+
+    <!-- Step 4: Preview & Safety Verification -->
+    {{#if (eq step 4)}}
+    <div class="ts-card">
+        <div class="ts-section-title">
+            <i class="fas fa-shield-alt"></i> Vorschau & Sicherheitsprüfung
+        </div>
+
+        <!-- Summary Bar -->
+        <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+            <div style="flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 8px; text-align: center;">
+                <div style="font-size: 0.8em; opacity: 0.7;">Seiten zu aktualisieren</div>
+                <div style="font-size: 1.3em; font-weight: bold; color: #00f2fe;">{{previewData.pagesCount}}</div>
+            </div>
+            <div style="flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 8px; text-align: center;">
+                <div style="font-size: 0.8em; opacity: 0.7;">Link-Integrität (@UUID)</div>
+                <div style="font-size: 1.3em; font-weight: bold; color: {{#if previewData.linksOk}}#2ecc71{{else}}#f1c40f{{/if}};">
+                    {{#if previewData.linksOk}}<i class="fas fa-check-circle"></i> Intakt{{else}}<i class="fas fa-exclamation-triangle"></i> Repariert{{/if}}
+                </div>
+            </div>
+            <div style="flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 8px; text-align: center;">
+                <div style="font-size: 0.8em; opacity: 0.7;">Glossar-Begriffe</div>
+                <div style="font-size: 1.3em; font-weight: bold; color: #f1c40f;">+{{previewData.newGlossaryCount}}</div>
+            </div>
+        </div>
+
+        <!-- Conflicts / Problem Areas list with Full Original Sentence -->
+        {{#if previewData.hasConflicts}}
+        <div style="font-weight: bold; margin-bottom: 6px; color: #f39c12; display: flex; align-items: center; gap: 6px;">
+            <i class="fas fa-exclamation-circle"></i> Erkannte Abweichungen / Geschützte Begriffe ({{previewData.conflicts.length}})
+        </div>
+
+        <div style="flex: 1; overflow-y: auto; padding-right: 4px;">
+            {{#each previewData.conflicts}}
+            <div class="ts-conflict-card">
+                <div class="ts-conflict-header">
+                    <span><i class="fas fa-tag"></i> {{this.originalTerm}}</span>
+                    <span class="ts-location-tag"><i class="fas fa-file-alt"></i> {{this.locationName}}</span>
+                </div>
+
+                <!-- Full Original Source Sentence -->
+                <div class="ts-sentence-box original">
+                    <div style="font-size: 0.75em; font-weight: bold; color: #3498db; text-transform: uppercase; margin-bottom: 2px;">
+                        <i class="fas fa-file-invoice"></i> Originaler Ausgangssatz (Quelle):
+                    </div>
+                    <div>{{{this.originalSentenceHtml}}}</div>
+                </div>
+
+                <!-- AI Translated Sentence -->
+                <div class="ts-sentence-box ai">
+                    <div style="font-size: 0.75em; font-weight: bold; color: #e74c3c; text-transform: uppercase; margin-bottom: 2px;">
+                        <i class="fas fa-robot"></i> KI-Übersetzung & Vorschlag:
+                    </div>
+                    <div>{{{this.aiSentenceHtml}}}</div>
+                </div>
+
+                <!-- Resolution Radio Option -->
+                <div style="display: flex; gap: 16px; margin-top: 6px; background: rgba(0,0,0,0.3); padding: 6px 10px; border-radius: 4px;">
+                    <label style="cursor: pointer; font-size: 0.85em; display: flex; align-items: center; gap: 6px; color: #2ecc71;">
+                        <input type="radio" name="conflict_{{this.id}}" value="restore" checked>
+                        <span>Original-Glossarbegriff wiederherstellen (<b>{{this.originalTerm}}</b>)</span>
+                    </label>
+                    <label style="cursor: pointer; font-size: 0.85em; display: flex; align-items: center; gap: 6px; color: #e74c3c;">
+                        <input type="radio" name="conflict_{{this.id}}" value="keep">
+                        <span>KI-Vorschlag übernehmen (<b>{{this.currentTerm}}</b>)</span>
+                    </label>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+        <div class="ts-badge ts-badge-success" style="padding: 12px; display: block; font-size: 0.95em; border-radius: 6px; margin-bottom: 12px; text-align: center;">
+            <i class="fas fa-check-circle" style="font-size: 1.2em; vertical-align: middle;"></i> Alle Sicherheitsprüfungen bestanden! Keine Begriffskonflikte oder defekten Links gefunden.
+        </div>
+        {{/if}}
+
+        <div class="ts-actions">
+            <button type="button" class="ts-btn" data-action="backToStep3">
+                <i class="fas fa-arrow-left"></i> Zurück zum Einfügen
+            </button>
+            <button type="button" class="ts-btn ts-btn-success" data-action="applyFinalUpdate">
+                <i class="fas fa-save"></i> Journal aktualisieren & Übernehmen
+            </button>
+        </div>
+    </div>
+    {{/if}}
+</div>

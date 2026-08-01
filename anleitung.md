@@ -1,129 +1,131 @@
-# 📖 Benutzerhandbuch: Phils PF2e AI Translator
+# 📖 Anleitung: Phils PF2e AI Translator (v2.0.0)
 
-Willkommen beim ultimativen Übersetzungs-Tool für **Foundry VTT (Pathfinder 2e)**. Dieses Modul hilft dir, Journal-Einträge schnell, konsistent und mithilfe moderner KI (Gemini, ChatGPT, Claude etc.) zu übersetzen.
+Willkommen beim ultimativen Übersetzungs-Tool für Foundry VTT (Pathfinder 2e). Dieses Modul hilft dir, Journal-Einträge schnell, atmosphärisch und konsistent mithilfe kostenloser KI (Gemini, ChatGPT, Claude etc.) zu übersetzen.
 
----
+## 1. Erste Schritte
 
-## 1. ⚙️ Erste Schritte & Einrichtung
+1. **Installation**: Stelle sicher, dass das Modul in Foundry aktiviert ist.
+2. **Einstellungen**:
+    * Navigiere zu `Einstellungen` > `Modul-Einstellungen` > `Phils PF2e AI Translator`.
+    * **AI Provider**: Wähle deinen bevorzugten KI-Anbieter (z. B. Google Gemini).
+    * **Game System**: Wähle "Pathfinder 2e" (wichtig für den Regel-Kontext).
+    * **Max Prompt-Länge**: Standard ist 100.000 Zeichen.
 
-Bevor es losgeht, müssen wir sicherstellen, dass alles korrekt eingestellt ist.
+## 2. Das Translation Studio (Schritt-für-Schritt)
 
-1.  **Aktivierung**: Stelle sicher, dass das Modul in deiner Welt aktiviert ist.
-2.  **Konfiguration**: Navigiere zu `Einstellungen` > `Modul-Einstellungen` > `Phils PF2e AI Translator`.
-    * **AI Provider**: Wähle deinen KI-Anbieter (empfohlen: *Google Gemini* oder *OpenAI*).
-    * **Game System**: Wähle zwingend **"Pathfinder 2e"** (wichtig für das korrekte Regel-Wording).
-    * **Max Prompt-Länge**: Standard ist `100.000`.
-        > *Hinweis: Erhöhe diesen Wert nur, wenn du ein kostenpflichtiges Abo oder ein Modell mit großem Kontext-Fenster (z. B. Gemini 1.5) nutzt.*
+Das Modul führt dich in einem eleganten 4-Schritte-Studio durch den gesamten Übersetzungsprozess.
 
----
+### Schritt 1: Setup & Seitenauswahl
+1. Klicke im Foundry-Reiter **Journalnotizen** oben auf den rötlichen Button **`PF2e Übersetzer`**.
+2. Ziehe ein Journal per Drag & Drop in das Fenster (oder wähle ein geöffnetes Journal aus).
+3. Wähle deinen Modus:
+   - **Übersetzung:** Übersetzt englische Texte ins deutsche Pathfinder 2e High-Fantasy-Deutsch.
+   - **Grammatik-Check:** Prüft deutsche Texte auf Stil, Rechtschreibung und Logik.
+   - **Nur Glossar:** Erstellt ein Wörterbuch für wichtige Begriffe.
+4. Markiere die Seiten, die du übersetzen möchtest.
+5. Klicke unten auf **"Weiter zu Prompt & KI"**.
 
-## 2. 🚀 Der Übersetzungs-Workflow
+### Schritt 2: Prompt & KI öffnen
+1. Klicke auf **"Prompt kopieren & KI öffnen"**.
+2. Der speziell formatierte Prompt wird automatisch in deine Zwischenablage kopiert und dein KI-Anbieter öffnet sich in einem neuen Browser-Tab.
+3. Klicke bei der KI in das Eingabefeld, drücke `STRG + V` und sende die Nachricht ab.
+4. Kopiere die gesamte Antwort der KI.
 
-Folge diesen Schritten, um deine Inhalte zu übersetzen.
+### Schritt 3: Einfügen & Analysieren
+1. Kehre zu Foundry VTT zurück. Das Studio wartet bereits im Schritt 3 **Einfügen**.
+2. Füge die gesamte KI-Antwort per `STRG + V` in das Textfeld ein.
+3. Klicke auf **"Analysieren & Prüfen"**. Das Modul verarbeitet Übersetzung und Glossar automatisch in einem Schritt.
 
-### Schritt 1: Journal auswählen
-Öffne den **"AI Translation Assistant"** (Button im Journal-Browser) und ziehe ein Journal oder eine einzelne Seite per Drag-and-Drop in das Fenster.
-
-### Schritt 2: Konfiguration & Prompt erstellen
-Im nun offenen Konfigurationsfenster:
-1.  **Seiten wählen**: Markiere die Checkboxen der Seiten, die übersetzt werden sollen.
-    * *Tipp:* Starte mit kleinen Mengen (Batch-Größe beachten), um die KI nicht zu überfordern.
-2.  **Starten**: Klicke auf den Button `Übersetzung starten`.
-3.  **Zwischenablage**: Das Modul generiert nun den Prompt und kopiert ihn **automatisch** in deine Zwischenablage.
-    * *Info:* Der Text beginnt mit `[ANFANG_DER_ANFRAGE]` und endet mit `[ENDE_DER_ANFRAGE]`.
-
-### Schritt 3: KI füttern
-1.  Öffne deinen KI-Chat (der Browser-Tab öffnet sich meist automatisch).
-2.  Klicke in das Eingabefeld und drücke `STRG+V` (Einfügen).
-3.  Sende die Nachricht ab.
-
-### Schritt 4: Antwort verarbeiten (Wichtig!)
-Die KI wird mit **zwei separaten JSON-Code-Blöcken** antworten. Gehe exakt so vor:
-
-#### 🅰️ Phase 1: Die Übersetzung
-1.  Kopiere aus der KI-Antwort nur den **ersten Code-Block** (unter der Überschrift "BLOCK 1").
-2.  Gehe zurück zu Foundry in das Fenster **"Result"**.
-3.  Füge den Code in das Textfeld ein.
-4.  Klicke auf **"Aktualisieren"**.
-    * *Das Journal wird nun im Hintergrund aktualisiert.*
-
-#### 🅱️ Phase 2: Das Glossar (Optional)
-*Falls die KI neue Begriffe gelernt hat (also eigentlich immer), öffnet sich jetzt automatisch ein zweites Fenster ("Glossar aktualisieren").*
-1.  Kopiere aus der KI-Antwort den **zweiten Code-Block** (unter der Überschrift "BLOCK 2").
-2.  Füge ihn in dieses neue Fenster ein.
-3.  Bestätige mit **"Hinzufügen"**.
-    * *Dein 'AI Glossary' ist nun schlauer für die nächste Runde!*
+### Schritt 4: Vorschau & Journal aktualisieren
+1. Das Modul zeigt dir eine transparente Vorschau aller Änderungen.
+2. Falls die KI geschützte Begriffe aus deinem Glossar ändern wollte, siehst du den **vollständigen originalen Ausganssatz** direkt über dem KI-Satz mit farblicher Hervorhebung.
+3. Stelle geschützte Begriffe nach Wunsch per Mausklick wieder her.
+4. Klicke auf **"Journal aktualisieren & Übernehmen"**. Dein Journal wird sofort gespeichert!
 
 ---
 
-## 3. 🖥️ Die Fenster im Detail
+---
+
+## 3. Die Fenster im Detail
 
 ### 📋 Das Resultat-Fenster ("Result")
-Hier landest du immer zuerst, nachdem du den Prompt kopiert hast.
-* **Eingabefeld**: Hierhin gehört der **BLOCK 1** der KI-Antwort.
-* **Button "Journal aktualisieren"**: Wendet die Übersetzung an.
-* **Button "Überspringen"**: Ignoriert die aktuelle Seite, falls die KI einen Fehler gemacht hat.
+Hier landest du immer, nachdem du die Antwort der KI kopiert hast.
+*   **Eingabefeld**: Hier fügst du die Antwort (STRG+V) ein.
+*   **Button "Journal aktualisieren"**: Wendet die Änderungen an.
+*   **Button "Überspringen"**: Falls die KI Unsinn geredet hat und du diese Seite auslassen willst.
 
 ### 📚 Das Glossar-Fenster ("Update Glossary")
-Erscheint nur, wenn neue Fachbegriffe (z. B. "Fireball" -> "Feuerball") erkannt wurden.
-* **Liste**: Zeigt eine Vorschau der neuen Begriffe.
-* **Button "Zum Glossar hinzufügen"**: Speichert die Begriffe dauerhaft im Journal `AI Glossary`. Ab jetzt nutzt die KI diese Übersetzung konsistent.
+Dieses Fenster erscheint automatisch, wenn die KI neue Begriffe gefunden hat, die noch nicht in deinem Glossar stehen.
+*   **Liste**: Zeigt dir die neuen Begriffe (z.B. `Fireball = Feuerball`).
+*   **"Zum Glossar hinzufügen"**: Speichert die Begriffe dauerhaft. Ab jetzt weiß die KI bei *jeder* zukünftigen Übersetzung, wie diese Begriffe heißen.
 
 ### ⚖️ Das Konflikt-Fenster ("Glossar Konflikte")
-*Erscheint oft beim Grammatik-Check oder Re-Übersetzungen.*
-Dies ist deine Sicherheits-Zentrale. Sie warnt dich, wenn die KI einen Begriff ändern will, der eigentlich durch dein Glossar geschützt ist.
-* **Original**: Der geschützte Begriff aus deinem Glossar (z. B. "Langschwert").
-* **Neu (KI)**: Der Vorschlag der KI (z. B. "Langes Schwert").
-* **Deine Entscheidung**:
-    * 🔘 **Wiederherstellen**: Der Begriff aus dem Glossar wird erzwungen. *(Empfohlen für Konsistenz)*.
-    * 🔘 **Neu behalten**: Die Änderung der KI wird akzeptiert (z. B. bei nötigen Grammatik-Anpassungen wie Genitiv).
+*Erscheint vor allem beim Grammatik-Check.*
+Dieses Fenster ist deine Sicherheits-Zentrale. Es geht auf, wenn die KI versucht, einen Begriff zu ändern, der eigentlich durch dein Glossar geschützt ist.
+*   **Original**: Zeigt den Begriff, wie er im Glossar steht (z.B. "Langschwert").
+*   **Neu (KI)**: Zeigt, was die KI daraus machen wollte (z.B. "Langes Schwert"). Beachte das es manchmal schwer sein kann vorher von nachher zu      unterscheiden. 
+*   **Entscheidung**:
+    *   🔘 **Wiederherstellen**: Der Begriff aus dem Glossar wird erzwungen. (Sicherste Option).
+    *   🔘 **Neu behalten**: Du erlaubst der KI, den Begriff in diesem speziellen Fall zu ändern (z.B. bei Grammatik-Anpassungen).
+*   **"Alle neuen übernehmen"**: Akzeptiert alle Änderungen der KI mit einem Klick.
 
 ---
 
-## 4. ✨ Features & Funktionen
+## 4. Features & Funktionen
 
-### 📚 Das KI-Glossar (Konsistenz ist King)
-Das Modul sucht nach einem Journal namens **"AI Glossary"**. Existiert es, wird dessen Inhalt jeder Anfrage beigefügt. So weiß die KI, dass "Mage Hand" immer "Magische Hand" heißt.
-* **Erstellung**: Wähle ein Journal mit vielen Namen/Orten, setze den Modus auf **"Nur Glossar (Namen) generieren"** und lass die KI eine Basis-Liste erstellen.
+### 📚 KI-Glossar (Für konsistente Begriffe)
+Damit die KI weiß, dass "Mage Hand" nicht "Magierhand", sondern "Magische Hand" heißt, nutzt das Modul ein Glossar.
+* **Funktionsweise**: Das Modul sucht nach einem Journal namens **"AI Glossary"** (oder "AI Glossar"). Existiert es, wird der Inhalt automatisch jeder Anfrage beigefügt.
+* **Erstellung**: Nimm ein Journal mit vielen Namen/Orten, setze den Haken bei "Nur Glossar (Namen) generieren" und lass die KI eine Liste für dich erstellen.
 
 ### 📝 Grammatik-Check
-Wähle im Menü `Grammatik-Check` statt `Übersetzung`.
-* Die KI prüft den deutschen Text auf Fehler und Logik.
-* *Sicherheit:* Begriffe aus dem Glossar werden dabei "gelocked", damit die KI sie nicht verschlimmbessert.
+* Wähle im Menü `Grammatik-Check` statt `Übersetzung`.
+* Die KI prüft den Text auf Fehler und Logik (z. B. korrigiert sie "Schattenwandeln Zwilling" zu "Schattenzwilling").
+* *Sicherheit:* Begriffe aus dem Glossar werden dabei geschützt, damit die KI sie nicht "verschlimmbessert".
 
-### 🔄 Auto-Batch (Automatisierung)
-* **Automatische Weiterschaltung**: Nach einem Batch (Standard: 10 Seiten) öffnet sich automatisch das Fenster für die nächsten Seiten.
-* **Intelligente Auswahl**: Das Modul erkennt automatisch, welche Seiten noch unübersetzt (oder ungeprüft) sind und wählt diese vorrangig aus.
+### 🔄 Auto-Batch (Workflow-Automatisierung)
+Das Modul denkt mit!
+*   **Automatische Weiterschaltung**: Nachdem du einen Batch (Standard: 10 Seiten, einstellbar in den Settings) bearbeitet hast, öffnet sich automatisch das nächste Fenster.
+*   **Intelligente Auswahl**:
+    *   Im **Übersetzungs-Modus**: Wählt die nächsten 10 *unübersetzten* Seiten.
+    *   Im **Grammatik-Modus**: Wählt die nächsten 10 Seiten, die noch *nicht geprüft* wurden.
 
 ### ✅ Status-Symbole
-* ✅ **Grüner Haken**: Seite ist fertig übersetzt.
-* 📘 **Blaues "AB"**: Seite wurde grammatikalisch geprüft.
+In der Seitenliste siehst du den Status jeder Seite:
+*   ✅ **Grüner Haken**: Diese Seite wurde bereits **übersetzt**.
+*   **Blaues "AB" mit Haken**: Diese Seite wurde bereits **grammatikalisch geprüft**.
 
 ---
 
-## 5. 🛠️ Fehlerbehebung (Troubleshooting)
+## 5. Fehlerbehebung (Troubleshooting)
 
-### 😵‍💫 Die KI "halluziniert" (Häufigster Fehler)
-Die KI schreibt Unsinn oder verliert den Kontext.
-* **Lösung**: Versuche nicht, die KI im Chat zu korrigieren. Das verschwendet Tokens. Starte einen **neuen Chat** und füge den Prompt erneut ein.
+### Die KI "halluziniert" (Häufigster Fehler)
+Die KI kann manchmal den Kontext verlieren oder Unsinn schreiben. Das lässt sich technisch nie zu 100 % verhindern.
+* **Lösung**: Wenn die KI offensichtlich Fehler macht ("spinnt"), versuche nicht, sie im selben Chat zu korrigieren. Das verschwendet meist nur deine Tokens (Nutzungslimit).
+* **Besser**: Starte einen **neuen Chat** und füge den Prompt erneut ein.
 
-### ✂️ Fehler: "Incomplete AI Response"
-Die KI hört mitten im Code-Block auf (Text zu lang).
-* **Lösung A**: Schreibe "Weiter" oder "Continue". Kopiere beide Teile manuell zusammen.
-* **Lösung B**: Reduziere die "Batch Size" in den Modul-Einstellungen (z. B. auf 5 Seiten).
+### Fehler: "Incomplete AI Response"
+Die KI hat mitten im Satz aufgehört, weil die maximale Antwortlänge erreicht wurde.
+* **Lösung A**: Schreibe der KI "Weiter" oder "Continue". Kopiere danach **beide** Teile der Antwort zusammen in das Tool.
+* **Lösung B**: Wähle beim nächsten Mal weniger Seiten aus ("Batch Size" in den Einstellungen reduzieren).
 
-### 🚫 Fehler: "JSON invalid"
-Du hast Text mitkopiert, der nicht zum Code gehört.
-* **Lösung**: Achte darauf, **nur** den Teil zwischen den Klammern `{` und `}` (bzw. den Code-Block-Markierungen) zu kopieren.
+### Fehler: "JSON invalid"
+Die KI hat keinen gültigen Programm-Code geliefert oder Text außerhalb der Code-Blöcke geschrieben.
+* **Lösung**: Überprüfe die Antwort. Versuche, nur den Teil zwischen ` ```json ` und ` ``` ` manuell zu kopieren und einzufügen. Hilft das nicht -> Neuer Chat.
 
-### 🔒 Fehler: "ID Verification Failed"
-Die KI hat versucht, interne System-IDs zu ändern. Das Modul blockiert dies zum Schutz deiner Daten.
-* **Lösung**: Klicke auf "Regenerate" bei der KI. Falls das nicht hilft: Prompt neu generieren mit weniger Seiten.
+### Fehler: "ID Verification Failed"
+Die KI hat halluziniert und versucht, die internen IDs der Journal-Seiten zu ändern oder zu löschen. Das Modul blockiert dies zum Schutz deiner Daten.
+* **Lösung**: Versuche es erneut ("Regenerate" bei der KI). Wenn das Problem bestehen bleibt, wähle weniger Seiten aus oder starte einen neuen Chat.
+
+### Fehler: "Glossary JSON in Translation" / "Invalid Glossary JSON"
+Du hast versehentlich den falschen Modus benutzt oder das falsche JSON eingefügt.
+* **Lösung**:
+    * Wenn du **"Nur Glossar generieren"** wolltest -> Stelle sicher, dass du das Glossar-JSON kopiert hast.
+    * Wenn du **übersetzen** wolltest -> Stelle sicher, dass du NICHT das Glossar-JSON kopiert hast (manchmal gibt die KI beides aus).
+
 
 ---
 
-## 6. 💡 Profi-Tipps
-
-* **Custom Instructions**: Nutze das Feld für eigene Anweisungen im Übersetzungs-Fenster.
-    * *Beispiel:* "Nutze das informelle 'Du' statt 'Sie'" oder "Schreibe im Stil eines alten Zwerges".
-* **Konflikt-Management**: Sei vorsichtig, wenn du im Konflikt-Fenster auf "Alle neuen übernehmen" klickst. Manchmal will die KI etablierte Namen "eindeutschen", die du eigentlich englisch lassen wolltest.
+## 6. Profi-Tipps
+* **Custom Instructions**: Du kannst im Übersetzungs-Fenster eigene Anweisungen geben (z. B. "Nutze das informelle 'Du' statt 'Sie'" oder "Schreibe im Piraten-Slang").
+* **Konflikt-Lösung**: Wenn die KI einen Begriff anders übersetzt, als er im Glossar steht, fragt dich das Modul, ob du den alten Begriff behalten oder den neuen übernehmen möchtest.

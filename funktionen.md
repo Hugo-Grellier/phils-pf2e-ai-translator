@@ -30,14 +30,22 @@ Die Lösung liegt in einem Verfahren, welches ich als **„Indexierte Tokenisier
 2.  **Substitution:** Sie werden durch abstrakte Platzhalter ersetzt (z.B. `[[#1:Machtangriff]]`). Dies signalisiert der KI unmissverständlich: *„Dieser Textbaustein ist sakrosankt. Er darf syntaktisch eingebettet, jedoch nicht intrinsisch modifiziert werden.“*
 3.  **Verifikation:** Nach Rückerhalt des Textes prüft das Modul, ob die Integrität dieser Platzhalter gewahrt wurde. Sollte die KI – in einem Anfall von künstlicher Hybris – versuchen, aus dem „Machtangriff“ einen „Kraftschlag“ zu formen, interveniert das System mit einer sofortigen Fehlermeldung (Konflikt-Dialog).
 
-## IV. Sicherheitsarchitektur und Redundanz
+## IV. Die Architektur des Translation Studios (Monolytische Benutzeroberfläche)
+
+Mit der Version 2.0.0 erfährt die Benutzeroberfläche eine fundamentale Neugestaltung:
+
+1. **Konsolidierung im 4-Stufen-Wizard:** Sämtliche Interaktionen werden nunmehr in einem einzigen, zentralen Anwendungsfenster zusammengefasst. Der Nutzer durchläuft eine logisch strukturierte Sequenz (Setup ➔ Prompt ➔ Einfügen ➔ Vorschau).
+2. **Das Single-Paste-Verfahren:** Das Modul akzeptiert die gesamte Rückgabe der künstlichen Intelligenz in einem einzigen Eingabeschritt. Die Trennung von Übersetzungstexten und terminologischen Glossar-Erweiterungen erfolgt vollautomatisch, ergänzt durch eine intelligente Syntax-Korrektur.
+3. **Visuelle Satzgegenüberstellung:** Zur Verifikation von Abweichungen wird der ursprüngliche Quellsatz in voller Länge dem generierten Vorschlag der KI direkt gegenübergestellt.
+
+## V. Sicherheitsarchitektur und Redundanz
 
 Da das Vertrauen in stochastische Sprachmodelle stets begrenzt sein sollte, operiert das Modul nach dem Prinzip der maximalen Risikominimierung.
 
 *   **Präventive Duplikation:** Vor jeder Schreiboperation wird eine vollständige Kopie (Backup) des betroffenen Journals angelegt.
-*   **Strukturelle Validierung:** Das System verifiziert, ob die interne Datenstruktur (IDs, Verlinkungen) der Rückgabe kongruent mit dem Original ist. Eine „Halluzination“ von nicht existenten Verweisen wird rigoros sanktioniert und der Import verweigert.
+*   **Strukturelle Validierung:** Das System verifiziert, ob die interne Datenstruktur (IDs, Verlinkungen) der Rückgabe kongruent mit dem Original ist.
 
-## V. Konklusion
+## VI. Konklusion
 
 Der *Phil's PF2e AI Translator* ist somit nicht bloß ein Werkzeug, sondern ein orchestraler Dirigent, der die Kakophonie generativer KI in die harmonische Symphonie eines perfekt übersetzten Regelwerkes zwingt – stets unter der strengen Aufsicht des menschlichen Intellekts.
 

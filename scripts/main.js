@@ -1,4 +1,4 @@
-import { TranslationAssistantApp } from './TranslationAppV2.js';
+import { TranslationStudioApp } from './TranslationStudioApp.js';
 import { MODULE_ID } from './TranslationLogic.js';
 
 Hooks.once('init', () => {
@@ -48,10 +48,11 @@ Hooks.on('renderJournalDirectory', async (app, html) => {
 
     button.addEventListener("click", event => {
         event.preventDefault();
-        new TranslationAssistantApp().render(true);
+        new TranslationStudioApp().render(true);
     });
 
     let headerActions = element.querySelector(".header-actions");
     if (headerActions) headerActions.append(button);
     else element.append(button);
 });
+

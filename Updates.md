@@ -1,3 +1,12 @@
+## v2.0.0 - Das große Translation Studio & Sicherheits-Update
+*   **NEU: 1-Fenster "Translation Studio":** Das Modul wurde komplett überarbeitet und fasst alle bisherigen Einzelfenster in ein zentrales, übersichtliches Fenster mit visueller Schrittleiste (*1. Setup & Seiten ➔ 2. Prompt & KI ➔ 3. Einfügen ➔ 4. Vorschau & Prüfung*) zusammen.
+*   **NEU: Einmaliges Einfügen (Single-Paste):** Die KI-Antwort muss nur noch ein einziges Mal eingefügt werden! Das Modul erkennt Übersetzungen und Glossar-Erweiterungen automatisch in einem Schritt und repariert kleine Formatierungsfehler der KI im Hintergrund.
+*   **NEU: Satzgegenüberstellung im Sicherheits-Check:** Bei Begriffskonflikten oder Abweichungen zeigt Schritt 4 jetzt immer den **vollständigen originalen Ausgangssatz** direkt über dem KI-Vorschlag mit farblicher Hervorhebung an.
+*   **NEU: Atmosphärische High-Fantasy RPG Übersetzung:** Die Prompts leiten die KI zu flüssigem, epischem Pathfinder 2e Deutsch an ("einen Lebensweg beschreiten" statt "ihr begreift euch auf", "Lehrmeister Ot" statt "Lehrer Ot").
+*   **NEU: GM-Originalnamen in Klammern:** Bei Eigennamen (NPCs, Orten, Gegenständen) wird der englische Originalname beim ersten Vorkommen im Text in Klammern dahinter genannt (z. B. `Lehrmeister Ot (Teacher Ot)`), damit der Spielleiter die Originalquelle sofort wiederfindet.
+*   **NEU: Automatische Fehler-Reparatur:** Das Modul korrigiert fehlerhafte KI-IDs und beschädigte Verweise vor dem Speichern automatisch.
+*   **NEU: Zuverlässiges Speichern:** Sowohl Titel als auch Fließtexte aller ausgewählten Journal-Seiten werden garantiert sauber in der Foundry-Datenbank gespeichert.
+
 ## v1.4.7 - Render Fix & UI Improvements
 *   **Critical Fix: Conflict Resolution Render Error:** Behoben eines Fehlers ("Template part 'form' must render a single HTML element"), der auftrat, wenn die KI HTML-Tags in der Kontext-Vorschau zurückgab (z.B. `</div>`). Die Kontext-Vorschau wird nun sicher bereinigt, bevor sie angezeigt wird.
 *   **UI Verbesserung: Resizable Window:** Das Fenster für die Seitenauswahl wächst nun dynamisch mit, wenn du das Konfigurations-Fenster größer ziehst.
