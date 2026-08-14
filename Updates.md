@@ -1,3 +1,35 @@
+## v3.1.2 - Intelligente Link-Synchronisation & Schutz für Abenteuer-Journale 🔗
+
+* 🔗 **Automatische Link-Korrektur für übersetzte Abenteuer:** Wenn du ein Abenteuer oder ein Regelbuch in deine Spielwelt holst und übersetzt, leiten Querverweise im Text oft noch in geschützte englische Bücher. Mit der neuen Funktion erkennt das Modul automatisch, welche Texte du bereits in deiner Spielwelt hast, und passt die Verlinkungen so an, dass sie direkt deine deutschen Übersetzungen öffnen.
+* 🛡️ **Vollständiger Sicherheits-Backup-Schutz:** Bevor eine einzige Seite angepasst wird, erstellt das Modul für jedes betroffene Journal automatisch eine Sicherheitskopie des Originals. Du kannst den Urzustand jederzeit mit einem Klick wiederherstellen.
+* 📋 **Übersichtlicher Vorschau-Dialog:** Vor dem Speichern zeigt dir das Studio eine klare Tabelle mit allen gefundenen Querverweisen, den betroffenen Seiten und den neuen Zielen. Erst nach deiner Bestätigung werden die Anpassungen vorgenommen.
+* ⚡ **Direkt erreichbar im Studio:** In der oberen Menüleiste des Studios gibt es dafür ab sofort den praktischen Button *Links Sync*.
+
+## v3.1.1 - UI-Feinschliff & Performance-Optimierung ⚡
+
+* 🎨 **Nahtlose Sidebar- & Theme-Integration:** Optimierte Einbindung der Kopfzeilen-Aktionen in den Foundry-Seitenleisten (Journal- und Kompendienverzeichnis) für maximale Kompatibilität mit Custom-Themes und UI-Modulen (z. B. Dorako UI).
+* ⚡ **Code-Bereinigung & CSS-Optimierung:** Veraltete Stylesheet-Overrides und redundante Selektoren bereinigt, um Rendering-Konflikte zu vermeiden und ein sauberes, natives UI-Verhalten sicherzustellen.
+
+## v3.1.0 - Mojibake-Schutz & Verlässliche Original-Backups 🛡️
+
+* 🛡️ **Automatischer Mojibake-Schutz (`äöü`-Reparatur):** Wenn die KI-Antwort oder die Zwischenablage Zeichenkodierungsfehler enthält (z.B. `Ã¤` statt `ä`, `Ã¶` statt `ö`, `â€”` statt `—`), erkennt das Modul diese automatisch und heilt alle Zeichen sofort zu echten deutschen Umlauten.
+* 🔤 **Umlaute- & Kodierungs-Prüfung in der Vorschau:** In Schritt 4 (Vorschau & Speichern) gibt es nun eine automatische Status-Prüfung, die anzeigt, wie viele Umlaute erkannt wurden und ob Kodierungsfehler repariert werden mussten.
+* 🔄 **Verlässliche Original-Backups bei Multi-Batch-Übersetzungen:** Backups werden beim Klonen nun immer mit den echten englischen Originaldaten befüllt. Auch das Wiederherstellen des Originalzustands greift jetzt verlässlich auf die englischen Schnappschüsse zurück, sodass niemals versehentlich deutsche Texte im Backup landen.
+* ✍️ **Direkte UTF-8-Regel im KI-Prompt:** Der erzeugte Prompt weist die KI explizit an, saubere deutsche Umlaute (`ä`, `ö`, `ü`, `ß`) in direktem UTF-8 ohne HTML-Entities auszugeben.
+
+## v3.0.0 - Das Next-Gen Studio & System-Integrations Update 🎉
+
+* 📁 **Ganze Ordner & Kompendien übersetzen:** Du kannst jetzt ganze Ordner mit Dutzenden Journalen oder Gegenständen sowie komplette Kompendium-Packs per Drag & Drop in das Studio ziehen und übersetzen lassen!
+* 📖 **Offizielle deutsche Pathfinder-Begriffe garantiert:** Das Modul gleicht jeden Text vorab mit über 15.000 offiziellen deutschen Begriffen (Zauber, Talente, Monster, Zustände, Ausrüstung) ab. Offizielle Begriffe bleiben immer exakt und werkgetreu erhalten.
+* ⚡ **Smart-Sync nach System-Updates:** Wenn Pathfinder oder ein Kauf-Abenteuer ein Update erhält und Texte wieder auf Englisch sind, gleicht das Modul deine Welt mit deinem Übersetzungsspeicher ab und stellt alle deutschen Texte mit einem einzigen Klick kostenlos und blitzschnell wieder her!
+* 📚 **Strukturiertes 12-Kategorien Glossar:** Das In-World-Journal *AI Glossar* sortiert neue Begriffe automatisch in 12 übersichtliche Kategorieseiten ein (z. B. Orte, Götter & NSCs, Monster, Zauber, Ausrüstung, Talente).
+* 🛡️ **Schutz für Spielwerte, Würfelwürfe & Links:** Zauber-Verlinkungen, Rettungswürfe, Schaden und Würfelformeln im Text werden automatisch geschützt, sodass im Spiel alles weiterhin klickbar bleibt und fehlerfrei funktioniert.
+* 🔍 **Journal-Suche & Schnellkorrektur:** Ein neues Suchwerkzeug durchsucht all deine Journale. Mit den Schnell-Scannern findest du vergessene englische Textreste oder unübersetzte Seiten in Sekundenschnelle und kannst Wörter mit einem Klick überall austauschen.
+* 📊 **Live-Kapazitätsanzeige:** Ein praktischer Füllbalken zeigt dir in Echtzeit an, wie viel Text du ausgewählt hast und ob der Text in einen oder mehrere Durchgänge aufgeteilt wird.
+* 🧩 **Große Texte nahtlos aufteilen:** Riesige Kapitel werden automatisch in handliche Abschnitte unterteilt und beim Speichern nahtlos wieder für dich zusammengesetzt.
+* 💾 **Sicherungsdatei für deine Übersetzungen:** Du kannst all deine gesammelten Übersetzungen jederzeit mit einem Klick als Datei auf deinem PC speichern und in andere Welten mitnehmen.
+* 🖱️ **Rechtsklick-Menüs:** Starte das Studio direkt per Rechtsklick auf Journale, Ordner, Kompendien oder Gegenstände in der Seitenleiste.
+
 ## v2.0.0 - Das große Translation Studio & Sicherheits-Update
 *   **NEU: 1-Fenster "Translation Studio":** Das Modul wurde komplett überarbeitet und fasst alle bisherigen Einzelfenster in ein zentrales, übersichtliches Fenster mit visueller Schrittleiste (*1. Setup & Seiten ➔ 2. Prompt & KI ➔ 3. Einfügen ➔ 4. Vorschau & Prüfung*) zusammen.
 *   **NEU: Einmaliges Einfügen (Single-Paste):** Die KI-Antwort muss nur noch ein einziges Mal eingefügt werden! Das Modul erkennt Übersetzungen und Glossar-Erweiterungen automatisch in einem Schritt und repariert kleine Formatierungsfehler der KI im Hintergrund.
@@ -5,6 +37,7 @@
 *   **NEU: Atmosphärische High-Fantasy RPG Übersetzung:** Die Prompts leiten die KI zu flüssigem, epischem Pathfinder 2e Deutsch an ("einen Lebensweg beschreiten" statt "ihr begreift euch auf", "Lehrmeister Ot" statt "Lehrer Ot").
 *   **NEU: GM-Originalnamen in Klammern:** Bei Eigennamen (NPCs, Orten, Gegenständen) wird der englische Originalname beim ersten Vorkommen im Text in Klammern dahinter genannt (z. B. `Lehrmeister Ot (Teacher Ot)`), damit der Spielleiter die Originalquelle sofort wiederfindet.
 *   **NEU: Automatische Fehler-Reparatur:** Das Modul korrigiert fehlerhafte KI-IDs und beschädigte Verweise vor dem Speichern automatisch.
+*   **NEU: Übersetzungs-Statistik:** Über den neuen Button "Statistik" direkt oben im Translation Studio rufst du jederzeit deinen Wort- und Zeitersparnis-Bericht ab.
 *   **NEU: Zuverlässiges Speichern:** Sowohl Titel als auch Fließtexte aller ausgewählten Journal-Seiten werden garantiert sauber in der Foundry-Datenbank gespeichert.
 
 ## v1.4.7 - Render Fix & UI Improvements

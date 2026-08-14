@@ -1,67 +1,54 @@
-# 📖 Anleitung: Phils PF2e AI Translator (v2.0.0)
+# 📖 Anleitung: Phil's PF2e AI Translator (v3.0.0)
 
-Willkommen beim ultimativen Übersetzungs-Tool für Foundry VTT (Pathfinder 2e). Dieses Modul hilft dir, Journal-Einträge schnell, atmosphärisch und konsistent mithilfe kostenloser KI (Gemini, ChatGPT, Claude etc.) zu übersetzen.
+Willkommen beim ultimativen Übersetzungs-Tool für Foundry VTT (Pathfinder 2e). Dieses Modul hilft dir, Journale, ganze Ordner und Kompendium-Packs schnell, atmosphärisch und konsistent mithilfe kostenloser KI (Gemini, ChatGPT, Claude etc.) zu übersetzen.
 
 ## 1. Erste Schritte
 
-1. **Installation**: Stelle sicher, dass das Modul in Foundry aktiviert ist.
+1. **Installation**: Stelle sicher, dass das Modul in Foundry aktiviert ist (sowie das empfohlene `lang-de-pf2e`-Paket für offizielle deutsche Pathfinder-Begriffe).
 2. **Einstellungen**:
-    * Navigiere zu `Einstellungen` > `Modul-Einstellungen` > `Phils PF2e AI Translator`.
-    * **AI Provider**: Wähle deinen bevorzugten KI-Anbieter (z. B. Google Gemini).
-    * **Game System**: Wähle "Pathfinder 2e" (wichtig für den Regel-Kontext).
-    * **Max Prompt-Länge**: Standard ist 100.000 Zeichen.
+    * Navigiere zu `Einstellungen` > `Modul-Einstellungen` > `Phil's PF2e AI Translator`.
+    * **KI-Anbieter**: Wähle deinen bevorzugten KI-Anbieter (z. B. Google Gemini, ChatGPT, Claude).
+    * **Batch-Größe**: Standard ist 10 Seiten/Einträge pro Durchgang.
+    * **Max. KI-Batch-Kapazität**: Standard ist 16.000 Zeichen (optimal abgestimmt, um Abbrüche bei der KI zu verhindern).
 
 ## 2. Das Translation Studio (Schritt-für-Schritt)
 
 Das Modul führt dich in einem eleganten 4-Schritte-Studio durch den gesamten Übersetzungsprozess.
 
-### Schritt 1: Setup & Seitenauswahl
-1. Klicke im Foundry-Reiter **Journalnotizen** oben auf den rötlichen Button **`PF2e Übersetzer`**.
-2. Ziehe ein Journal per Drag & Drop in das Fenster (oder wähle ein geöffnetes Journal aus).
+### Schritt 1: Setup & Auswahl
+1. Klicke im Foundry-Reiter **Journalnotizen** oder **Kompendien** oben auf den Button **`PF2e Übersetzer`** (oder nutze den Rechtsklick auf jeden Ordner / jedes Journal).
+2. Ziehe ein Journal, einen ganzen Ordner oder ein Kompendium per Drag & Drop in das Fenster (oder wähle ein Kompendium aus dem Dropdown-Menü).
 3. Wähle deinen Modus:
-   - **Übersetzung:** Übersetzt englische Texte ins deutsche Pathfinder 2e High-Fantasy-Deutsch.
-   - **Grammatik-Check:** Prüft deutsche Texte auf Stil, Rechtschreibung und Logik.
-   - **Nur Glossar:** Erstellt ein Wörterbuch für wichtige Begriffe.
-4. Markiere die Seiten, die du übersetzen möchtest.
-5. Klicke unten auf **"Weiter zu Prompt & KI"**.
+   - **Übersetzen:** Übersetzt englische Texte ins deutsche Pathfinder 2e High-Fantasy-Deutsch.
+   - **Lektorat / Grammatik:** Prüft deutsche Texte auf Stil, Rechtschreibung und Regelkonsistenz.
+   - **Neues Glossar generieren:** Extrahiert wichtige Eigennamen und Begriffe aus Texten.
+4. Markiere die gewünschten Seiten oder nutze die praktischen Schnellfilter (*"Nur nicht übersetzt"*, *"Nächster Batch"*, *"Alle/Keine"*).
+5. **Live-Kapazitätsbalken:** Der farbige Balken zeigt dir in Echtzeit an, wie viele Zeichen ausgewählt sind und ob die Texte in einen oder mehrere Teil-Batches aufgeteilt werden.
+6. Klicke unten auf **"Prompt erstellen"**.
 
-### Schritt 2: Prompt & KI öffnen
-1. Klicke auf **"Prompt kopieren & KI öffnen"**.
+### Schritt 2: Prompt kopieren & KI öffnen
+1. Klicke auf **"Kopieren & KI öffnen"**.
 2. Der speziell formatierte Prompt wird automatisch in deine Zwischenablage kopiert und dein KI-Anbieter öffnet sich in einem neuen Browser-Tab.
 3. Klicke bei der KI in das Eingabefeld, drücke `STRG + V` und sende die Nachricht ab.
 4. Kopiere die gesamte Antwort der KI.
 
 ### Schritt 3: Einfügen & Analysieren
-1. Kehre zu Foundry VTT zurück. Das Studio wartet bereits im Schritt 3 **Einfügen**.
+1. Kehre zu Foundry VTT zurück. Das Studio wartet bereits im Schritt 3 **Antwort**.
 2. Füge die gesamte KI-Antwort per `STRG + V` in das Textfeld ein.
-3. Klicke auf **"Analysieren & Prüfen"**. Das Modul verarbeitet Übersetzung und Glossar automatisch in einem Schritt.
+3. Klicke auf **"Antwort analysieren"**. Das Modul verarbeitet Übersetzung, Verlinkungen und Glossar-Vorschläge automatisch in einem Schritt.
 
-### Schritt 4: Vorschau & Journal aktualisieren
-1. Das Modul zeigt dir eine transparente Vorschau aller Änderungen.
-2. Falls die KI geschützte Begriffe aus deinem Glossar ändern wollte, siehst du den **vollständigen originalen Ausganssatz** direkt über dem KI-Satz mit farblicher Hervorhebung.
-3. Stelle geschützte Begriffe nach Wunsch per Mausklick wieder her.
-4. Klicke auf **"Journal aktualisieren & Übernehmen"**. Dein Journal wird sofort gespeichert!
+### Schritt 4: Vorschau & Speichern
+1. Das Modul prüft alle Verlinkungen (`@UUID`, `@Check`, `@Damage`) auf Unversehrtheit und zeigt dir eine transparente Vorschau aller übersetzten Seiten.
+2. **Glossar-Vorschläge:** Neu erkannte Eigennamen und Begriffe werden direkt angezeigt und können per Häkchen automatisch in die 12 Kategorieseiten deines **AI Glossars** übernommen werden.
+3. Klicke auf **"Änderungen anwenden & Speichern"** (oder *"Teil anwenden & Weiter mit nächstem Teil"* bei mehrteiligen Batches). Dein Dokument wird sofort aktualisiert und im Translation Memory gesichert!
 
----
+## 3. Die Werkzeuge in der Kopfleiste
 
----
-
-## 3. Die Fenster im Detail
-
-### 📋 Das Resultat-Fenster ("Result")
-Hier landest du immer, nachdem du die Antwort der KI kopiert hast.
-*   **Eingabefeld**: Hier fügst du die Antwort (STRG+V) ein.
-*   **Button "Journal aktualisieren"**: Wendet die Änderungen an.
-*   **Button "Überspringen"**: Falls die KI Unsinn geredet hat und du diese Seite auslassen willst.
-
-### 📚 Das Glossar-Fenster ("Update Glossary")
-Dieses Fenster erscheint automatisch, wenn die KI neue Begriffe gefunden hat, die noch nicht in deinem Glossar stehen.
-*   **Liste**: Zeigt dir die neuen Begriffe (z.B. `Fireball = Feuerball`).
-*   **"Zum Glossar hinzufügen"**: Speichert die Begriffe dauerhaft. Ab jetzt weiß die KI bei *jeder* zukünftigen Übersetzung, wie diese Begriffe heißen.
-
-### ⚖️ Das Konflikt-Fenster ("Glossar Konflikte")
-*Erscheint vor allem beim Grammatik-Check.*
-Dieses Fenster ist deine Sicherheits-Zentrale. Es geht auf, wenn die KI versucht, einen Begriff zu ändern, der eigentlich durch dein Glossar geschützt ist.
+* ⚡ **Smart-Sync:** Gleicht nach einem offiziellen System- oder Abenteuer-Update deine Welt mit dem Translation Memory ab und stellt unveränderte deutsche Übersetzungen mit einem Klick kostenlos wieder her.
+* 💾 **Backup & Import:** Exportiert dein gesamtes Übersetzungswissen als `.json`-Datei oder liest frühere Backups ein.
+* 🔍 **Suche & Volltext-Scanner:** Durchsucht deine Journale nach Begriffen, findet vergessene englische Textreste und ermöglicht weltweites Ersetzen.
+* 📚 **Glossar:** Öffnet dein In-World-Journal *AI Glossar* direkt in Foundry.
+* 📊 **Statistik:** Zeigt dir genau an, wie viele Wörter du bereits übersetzt hast und wie viele Stunden Arbeit dir das Modul erspart hat.
 *   **Original**: Zeigt den Begriff, wie er im Glossar steht (z.B. "Langschwert").
 *   **Neu (KI)**: Zeigt, was die KI daraus machen wollte (z.B. "Langes Schwert"). Beachte das es manchmal schwer sein kann vorher von nachher zu      unterscheiden. 
 *   **Entscheidung**:

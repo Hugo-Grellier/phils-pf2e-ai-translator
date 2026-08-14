@@ -14,7 +14,7 @@ Machen wir uns nichts vor: Dieses Modul ist eigentlich nur ein glorifizierter Ve
 
 Der Workflow ist ein okkultes Ritual im neuen 1-Fenster Translation Studio:
 
-1.  **Das Opfer wählen:** Klicke oben im Journal-Tab auf den rötlichen Button **`PF2e Übersetzer`**. Zieh dein Journal per Drag & Drop rein, als würdest du einen nervigen Goblin in eine Fallgrube schubsen.
+1.  **Das Opfer wählen:** Klicke oben im Journal-Tab auf den Button **`PF2e Übersetzer`**. Zieh dein Journal per Drag & Drop rein, als würdest du einen nervigen Goblin in eine Fallgrube schubsen.
 2.  **Die Waffe wählen:** 
     * *"Übersetzen":* Wenn du Text hast, der noch englischer ist als Fish & Chips.
     * *"Grammatik-Check":* Wenn der Text schon deutsch ist, aber aussieht, als hätte ihn ein besoffener Ork mit Fäustlingen getippt.

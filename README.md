@@ -7,7 +7,7 @@
 ![Foundry v14 Compatible](https://img.shields.io/badge/Foundry-v14-brightgreen)
 ![System](https://img.shields.io/badge/System-PF2e-blue)
 ![License](https://img.shields.io/badge/License-GPLv3-blue)
-[![Version](https://img.shields.io/badge/version-v2.0.0-blue)](https://github.com/PhilsModules/phils-pf2e-ai-translator/releases)
+[![Version](https://img.shields.io/badge/version-v3.1.1-blue)](https://github.com/PhilsModules/phils-pf2e-ai-translator/releases)
 [![Patreon](https://img.shields.io/badge/SUPPORT-Patreon-ff424d?logo=patreon)](https://www.patreon.com/PhilsModules)
 
 <br>
@@ -45,23 +45,25 @@
 
 # <img src="https://flagcdn.com/48x36/de.png" width="28" height="21" alt="DE"> Deutsche Anleitung
 
-**Übersetze deine Foundry VTT Journale kostenlos mit KI im neuen 1-Fenster Translation Studio.**
+**Übersetze deine Pathfinder 2e Abenteuer, Journale, Ordner und Kompendien kostenlos mit KI im neuen Next-Gen Studio.**
 
-Phil's Pf2e Ai Translator verbindet deine Foundry VTT Welt mit der Power moderner KI. Das Besondere: **Du brauchst keine teuren API-Keys!** Das Modul arbeitet als intelligenter "Prompt-Engineer" für die kostenlosen Web-Versionen von Gemini, ChatGPT & Co.
+Phil's PF2e AI Translator verbindet deine Foundry VTT Welt mit der Power moderner KI. Das Besondere: **Du brauchst keine teuren API-Keys!** Das Modul arbeitet als intelligenter "Prompt-Engineer" für die kostenlosen Web-Versionen von Gemini, ChatGPT & Co.
 
 > 🧙‍♂️ **Deep Dive:** Willst du wissen, wie der "Grammatik-Schutzschild" und die "KI-Geiselnahme" genau funktionieren? Lies das [Grimoire der Faulheit (funktion.md)](funktion.md).
 >
 > 🧐 **Für das gehobene Auditorium:** Bevorzugst du eine eloquente Ausdrucksweise? [Exegese der Systemarchitektur](funktionen.md).
 
-## 🚀 Neue Features (v2.0.0)
+## 🚀 Highlights (v3.1.0)
 
-* 🎨 **1-Fenster Translation Studio:** Das gesamte Modul läuft in einem zentralen, übersichtlichen Fenster mit visueller Schrittleiste (*1. Setup & Seiten ➔ 2. Prompt & KI ➔ 3. Einfügen ➔ 4. Vorschau & Prüfung*).
-* 🧹 **Einmaliges Einfügen (Single-Paste):** KI-Antwort nur 1x einfügen. Übersetzung und Glossar werden in einem Schritt automatisch verarbeitet und von Formatierungsfehlern bereinigt.
-* 👁️ **Visual Diff & Satzgegenüberstellung:** Zeigt bei Begriffskonflikten den **vollständigen originalen Ausgangssatz** direkt über dem KI-Vorschlag mit farblicher Hervorhebung an.
-* 🎭 **High-Fantasy Pen-&-Paper Prosa:** Die Prompts leiten die KI zu flüssigem, atmosphärischem Pathfinder 2e Deutsch an ("einen Lebensweg beschreiten" statt "ihr begreift euch auf", "Lehrmeister Ot" statt "Lehrer Ot").
-* 🏷️ **GM-Hinweis für Original-Namen:** Nennt englische Originalnamen bei Eigennamen (NPCs, Orte, Gegenstände) beim ersten Vorkommen in Klammern (z. B. `Lehrmeister Ot (Teacher Ot)`).
-* 🛠️ **Automatische Fehler-Reparatur:** Korrektur von fehlerhaften KI-IDs und Verweisen vor dem Speichern.
-* 💾 **Safety First:** Erstellt automatisch ein **Backup** (Kopie) deines Journals, bevor Änderungen angewendet werden.
+* 🛡️ **Automatischer Mojibake- & Umlaute-Schutz:** Erkennt Zeichenkodierungsfehler (`Ã¤`, `Ã¶`, `Ã¼`, `â€”` etc.) in der KI-Antwort und repariert sie automatisch zu echten deutschen Umlauten (`ä`, `ö`, `ü`, `ß`).
+* 🔄 **Verlässliche Original-Backups:** Stellt sicher, dass bei mehrteiligen Übersetzungen Backups immer den reinen englischen Originalstand behalten und jederzeit 100% verlässlich wiederhergestellt werden können.
+* 📁 **Universelles Drag & Drop:** Übersetze einzelne Journale, komplette Journal-Ordner (rekursiv), Gegenstände oder ganze **Kompendium-Packs**.
+* 📖 **Offizielle Pathfinder-2e-Integration:** Gleicht Texte vorab mit über 15.000 offiziellen deutschen Begriffen aus dem `lang-de-pf2e`-Paket ab.
+* ⚡ **Smart-Sync nach System-Updates:** Stellt nach offiziellen Abenteuer- oder System-Updates alle deutschen Texte mit 1 Klick kostenlos wieder her.
+* 📚 **12-Kategorien Glossar:** Das Journal *AI Glossar* verwaltet neue Begriffe übersichtlich in 12 Themenkategorien (Orte, Götter, Monster, Zauber etc.).
+* 🛡️ **PF2e LinkProtection:** Schützt Würfelwürfe, Rettungswürfe (`@Check`), Schaden (`@Damage`) und Verlinkungen vor Beschädigung.
+* 🔍 **Journal-Suche & Schnellkorrektur:** Durchsucht alle Journale nach englischen Textresten oder Begriffen mit 1-Klick-Ersetzung.
+* 📊 **Live-Kapazitätsanzeige:** Zeigt Zeichenmenge und Batches in Echtzeit an und teilt riesige Texte automatisch auf.
 
 ## 📦 Installation
 
@@ -80,7 +82,7 @@ Phil's Pf2e Ai Translator verbindet deine Foundry VTT Welt mit der Power moderne
    Klicke in der rechten Seitenleiste von Foundry VTT auf das Buch-Symbol (**Journalnotizen**).
 
 2. **Übersetzer starten:**
-   Klicke oben in der Kopfzeile des Journal-Tabs auf den rötlichen Button **`PF2e Übersetzer`** (mit dem Sprach-Icon).
+   Klicke oben in der Kopfzeile des Journal-Tabs auf den Button **`PF2e Übersetzer`** (mit dem Schild-Icon).
 
 3. **Journal auswählen & Modus festlegen (Schritt 1 im Studio):**
    - Ziehe das gewünschte Journal per Drag & Drop direkt in das Fenster (oder wähle ein geöffnetes Journal aus).
@@ -106,34 +108,30 @@ Phil's Pf2e Ai Translator verbindet deine Foundry VTT Welt mit der Power moderne
 
 # <img src="https://flagcdn.com/48x36/gb.png" width="28" height="21" alt="EN"> English Instructions
 
-**Automated Translation of Foundry VTT Journals with AI**
+**Automated Translation of Pathfinder 2e Journals, Folders & Compendiums with AI**
 
-This module helps you to translate **large adventure modules** or long texts in Foundry VTT quickly and consistently. It is optimized for **PF2e** but works system-independently.
+Phil's PF2e AI Translator helps you translate **large adventure modules, entire compendium packs, item folders, and journals** in Foundry VTT quickly, consistently, and without API costs.
 
-## 🚀 Key Features
+## 🚀 Key Features (v3.1.0)
 
-* **No API Costs:** Works with the free web versions of Gemini, ChatGPT, & Co.
-* **Batch Translation:** Translate multiple pages at once.
-* **Glossary Support:** Automatically generates a glossary of names and terms to ensure consistent translation across pages.
-* **Smart Paste:** Automatically finds and extracts the JSON code block from the AI response.
-* **Official Translation Integration:** Checks the installed German Pathfinder 2e system module for existing translations to ensure consistency with official terms.
-* **Safety First:** Automatically creates a **Backup** (Copy) of your Journal before applying changes.
+* **Automatic Mojibake & Encoding Repair:** Automatically detects and heals character corruptions (e.g. `Ã¤` → `ä`, `â€”` → `—`) upon pasting AI responses.
+* **True Original Backups:** Guaranteed clean English original backups and 1-click restore from snapshot flags for multi-batch processes.
+* **Universal Drag & Drop:** Translate Journals, entire recursive Folders, Items, and complete **Compendium Packs**.
+* **Official PF2e Nomenclature:** Automatically checks against 15,000+ official German rules terms from `lang-de-pf2e`.
+* **Smart-Sync after Updates:** Re-applies all German translations after system or adventure updates in 1 click for free.
+* **12-Category Glossary:** Auto-sorts new terms into a structured 12-page in-world journal (*AI Glossar*).
+* **PF2e LinkProtection:** Ensures `@Check[...]`, `@Damage[...]`, `@Template[...]`, and inline rolls are never broken.
+* **Journal Search & Fulltext Scanner:** Global search & replace across all world journals with residue detection.
+* **Live Capacity Meter:** Real-time character counter that splits massive adventure chapters into manageable batches.
+* **Safety & Restores:** Automatic backups and 1-click restore to English originals.
 
 ## 📖 How to Use
 
-### Workflow A: Translation (Green Check ✅)
-1.  **Select Pages**: Choose the pages you want to translate.
-2.  **Generate Prompt**: Click **"Copy Prompt"**.
-3.  **AI Processing**: Paste into ChatGPT/Claude -> Copy Response (JSON).
-4.  **Update**: Paste into Foundry -> **"Update Journal"**.
-5.  **Loop**: The module automatically checks for remaining pages. If found, it opens the next window **pre-selected** for translation.
-
-### Workflow B: Grammar Check (Blue Spell Check 🧙‍♂️)
-1.  **Select Pages**: Choose pages (even if already translated) to check grammar.
-2.  **Generate Prompt**: Click **"Grammar Check"**.
-3.  **AI Processing**: Paste into ChatGPT/Claude -> Copy Response (JSON).
-4.  **Update**: Paste into Foundry -> **"Update Journal"**.
-5.  **Conflict Resolution**: If the AI tries to change protected terms, a warning dialog appears. You decide: Keep Original or Accept Change?
+1. **Open Studio:** Click the **`PF2e Übersetzer`** button in the Journal Directory or right-click any Folder / Compendium / Journal.
+2. **Select Content (Step 1):** Drag a Journal, Folder, or Compendium into the window. Select your mode (Translation, Grammar/Review, Glossary).
+3. **Generate & Copy Prompt (Step 2):** Click **"Copy Prompt & Open AI"**. The prompt is in your clipboard and your chosen AI provider opens in a new tab.
+4. **Paste & Analyze (Step 3):** Paste the AI's response in Step 3 and click **"Analyze Response"**.
+5. **Preview & Apply (Step 4):** Review links and newly suggested glossary terms. Click **"Apply Final Update"**!
 
 
 # ⚖️ Credits & Licenses
