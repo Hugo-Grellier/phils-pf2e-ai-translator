@@ -1,16 +1,32 @@
+// Official PF2e translation modules per UI language: system UI strings + babele compendium dir.
+const SOURCES = {
+    de: {
+        systemFile: "modules/lang-de-pf2e/translation/de/de.json",
+        packDir: "modules/lang-de-pf2e/translation/de/compendium",
+        perception: "Wahrnehmung"
+    },
+    fr: {
+        systemFile: "modules/lang-fr-pf2e/lang/fr.json",
+        // pf2-fr ships several name styles (vf, vf-vo, vo-vf...); "vf" = pure French names
+        packDir: "modules/pf2-fr/babele/vf/fr",
+        perception: "Perception"
+    }
+};
+
 export class DictionaryLoader {
     static _cache = null;
 
     /**
-     * Loads official translations from the lang-de-pf2e module.
-     * @returns {Promise<Object>} A map of English terms to German translations.
+     * Loads official translations from the PF2e translation module matching the UI language.
+     * @returns {Promise<Object>} A map of English terms to target-language translations.
      */
     static async loadOfficialTranslations() {
         if (this._cache) return this._cache;
+        const source = SOURCES[game.i18n.lang];
+        if (!source) return (this._cache = {});
 
         const dictionary = {};
-        const packDir = "modules/lang-de-pf2e/translation/de/compendium";
-        const systemFile = "modules/lang-de-pf2e/translation/de/de.json";
+        const { packDir, systemFile } = source;
 
         try {
             console.log("Phil's Journal Translator | Loading official translations...");
@@ -56,7 +72,7 @@ export class DictionaryLoader {
                 }
 
                 // Explicitly add Perception if missed (it might be "Perception Check" in en.json vs "Wahrnehmung" in de.json)
-                if (!dictionary["Perception"]) dictionary["Perception"] = "Wahrnehmung";
+                if (!dictionary["Perception"]) dictionary["Perception"] = source.perception;
 
             } catch (err) {
                 console.warn("Phil's Journal Translator | Failed to load system translations (en.json/de.json comparison):", err);
@@ -72,7 +88,7 @@ export class DictionaryLoader {
                         if (pf2e.Skill) Object.entries(pf2e.Skill).forEach(([k, v]) => add(k, v));
                         const abilityMap = { "Strength": pf2e.AbilityStr, "Dexterity": pf2e.AbilityDex, "Constitution": pf2e.AbilityCon, "Intelligence": pf2e.AbilityInt, "Wisdom": pf2e.AbilityWis, "Charisma": pf2e.AbilityCha };
                         Object.entries(abilityMap).forEach(([k, v]) => add(k, v));
-                        add("Perception", "Wahrnehmung");
+                        add("Perception", source.perception);
                     }
                 } catch (e) { console.error("Fallback loading failed", e); }
             }
