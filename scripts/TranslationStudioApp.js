@@ -15,7 +15,7 @@ export class TranslationStudioApp extends HandlebarsApplicationMixin(Application
         id: "translation-studio",
         tag: "form",
         window: {
-            title: "AI Translation Studio",
+            title: "PHILS_PF2E_AI_TRANSLATOR.UI.Studio.WindowTitle",
             icon: "fas fa-language",
             resizable: true,
             contentClasses: ["translation-studio-window", "standard-form"]
@@ -143,7 +143,7 @@ export class TranslationStudioApp extends HandlebarsApplicationMixin(Application
 
                 if (doc) {
                     if (!doc.isOwner) {
-                        ui.notifications.warn(loc('WarnNoPermission') || "Sie benötigen Besitzer-Rechte für dieses Journal.");
+                        ui.notifications.warn(loc('WarnNoPermission') || "You need owner permission for this journal.");
                         return;
                     }
                     this.document = doc;
@@ -245,7 +245,7 @@ export class TranslationStudioApp extends HandlebarsApplicationMixin(Application
         if (!this.generatedPrompt) return;
 
         await navigator.clipboard.writeText(this.generatedPrompt);
-        ui.notifications.info("Prompt in die Zwischenablage kopiert!");
+        ui.notifications.info(loc('PromptCopied'));
 
         const providerKey = game.settings.get(MODULE_ID, 'aiProvider') || 'gemini';
         const url = THEMES[providerKey]?.url || THEMES.gemini.url;
@@ -270,7 +270,7 @@ export class TranslationStudioApp extends HandlebarsApplicationMixin(Application
         if (textarea) this.pastedText = textarea.value;
 
         if (!this.pastedText || !this.pastedText.trim()) {
-            this.parseError = "Bitte füge die Antwort der KI ein.";
+            this.parseError = loc('Studio.PasteEmpty');
             this.render();
             return;
         }
@@ -334,7 +334,7 @@ export class TranslationStudioApp extends HandlebarsApplicationMixin(Application
             await addToGlossary(this.previewData.newGlossaryItems);
         }
 
-        ui.notifications.success(`Journal "${this.document.name}" erfolgreich aktualisiert!`);
+        ui.notifications.success(loc('Studio.JournalUpdated', { name: this.document.name }));
 
         // Reset studio for next batch
         this.step = 1;

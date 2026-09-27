@@ -318,7 +318,7 @@ export function robustJsonParse(jsonStr) {
 
 export function smartParseAiResponse(rawText) {
     if (!rawText || typeof rawText !== 'string') {
-        return { error: "Kein Text zum Parsen übergeben." };
+        return { error: loc('Studio.NoTextToParse') };
     }
 
     let translationJson = null;
@@ -363,7 +363,7 @@ export function smartParseAiResponse(rawText) {
     }
 
     if (!translationJson && !glossaryJournalJson && newGlossaryItems.length === 0) {
-        return { error: "Kein gültiger Übersetzungs- oder Glossar-JSON-Block in der Antwort gefunden. Prüfe die KI-Antwort." };
+        return { error: loc('Studio.NoJsonFound') };
     }
 
     return {
@@ -784,11 +784,11 @@ export async function processUpdate(doc, rawText, processingMode = 'translate', 
                         cleanGap = cleanGap.replace(/<[^>]*>?/gm, " ");
 
                         // Final Cleanup of non-word edge chars
-                        cleanGap = cleanGap.replace(/^[^\wäöüÄÖÜß("]+/, "")
-                            .replace(/[^\wäöüÄÖÜß).!?"']+$/, "");
+                        cleanGap = cleanGap.replace(/^[^\p{L}\d_("]+/u, "")
+                            .replace(/[^\p{L}\d_).!?"']+$/u, "");
 
 
-                        if (cleanGap.length < 2) return "[GELÖSCHT]";
+                        if (cleanGap.length < 2) return loc('Studio.Deleted');
 
                         if (cleanGap.length > 250) cleanGap = cleanGap.substring(0, 250) + "...";
 
@@ -888,7 +888,7 @@ export async function processUpdate(doc, rawText, processingMode = 'translate', 
                         conflicts.push({
                             id: id,
                             original: originalTerm,
-                            current: "[GELÖSCHT / FEHLT]",
+                            current: loc('Studio.DeletedMissing'),
                             originalContext: originalContext || "(Context not found)",
                             newContext: recoveredContext || "(Context lost - Term deleted)"
                         });
@@ -1284,7 +1284,7 @@ export async function addToGlossary(newItems) {
         } else {
             // If no list found, use standard header or keep existing content if it doesn't look like a glossary
             if (content.trim().length === 0) {
-                preContent = "<h1>Automatisches Glossar</h1><p>Denk bitte daran, dass dies automatisch übersetzte Begriffe sind. Prüfe bei Fehlern die Originalquelle.</p><hr>";
+                preContent = loc('Studio.GlossaryHeader');
             } else {
                 // Append to existing content if we couldn't find a list to replace
                 preContent = content + "\n<hr>\n";
