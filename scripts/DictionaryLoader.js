@@ -6,7 +6,7 @@ const SOURCES = {
         perception: "Wahrnehmung"
     },
     fr: {
-        systemFile: "modules/lang-fr-pf2e/lang/fr.json",
+        systemFile: "modules/pf2-fr/lang/fr.json",
         // pf2-fr ships several name styles (vf, vf-vo, vo-vf...); "vf" = pure French names
         packDir: "modules/pf2-fr/babele/vf/fr",
         perception: "Perception"
